@@ -96,6 +96,7 @@ description: 一句话摘要。
 - `slug`：文章链接名，建议使用英文、数字和短横线
 - `tags`：标签，多个标签用英文逗号分隔
 - `description`：首页卡片和 RSS 中显示的摘要
+- `pdf`：可选字段。若文章需要附带 PDF，把文件放到 `docs/assets/pdf/`，并填写相对文章页的路径，例如 `../assets/pdf/example.pdf`
 
 写完文章后执行：
 
@@ -112,6 +113,8 @@ git push origin main
 - `docs/tag.html`
 - `docs/rss.xml`
 - 首页最新文章区域
+
+如果文章 front matter 中包含 `pdf:` 字段，文章页会自动显示“下载 PDF 原文”按钮。所有文章页默认带有点赞按钮；当前点赞数据保存在读者浏览器的 `localStorage` 中，适合纯静态站点的轻量交互，不依赖后端数据库。
 
 ### 本地预览生成
 

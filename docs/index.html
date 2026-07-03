@@ -114,18 +114,6 @@
             letter-spacing: 0;
         }
 
-        .brand-mark {
-            display: grid;
-            width: 38px;
-            height: 38px;
-            place-items: center;
-            border-radius: 8px;
-            color: #ffffff;
-            background: linear-gradient(135deg, #5271ff, #48c6ef);
-            box-shadow: 0 10px 24px rgba(82, 113, 255, 0.30);
-            font-weight: 900;
-        }
-
         .brand-title {
             overflow: hidden;
             text-overflow: ellipsis;
@@ -522,7 +510,6 @@
     <div class="site-shell">
         <header class="topbar">
             <a class="brand" href="./" aria-label="返回首页">
-                <span class="brand-mark">B</span>
                 <span class="brand-title">布文的博客</span>
             </a>
             <nav class="nav" aria-label="站点导航">
@@ -550,10 +537,10 @@
                     <section class="profile-card">
                         <img class="avatar" src="assets/avatar.jpg" alt="布文头像">
                         <h2>布文</h2>
-                        <p>保持学习，持续记录。</p>
+                        <p>天快亮了，我的bug还剩最后一个</p>
                         <div class="stats" aria-label="博客统计">
                             <div class="stat">
-                                <strong>0</strong>
+                                <strong>1</strong>
                                 <span>文章</span>
                             </div>
                             <div class="stat">
@@ -561,7 +548,7 @@
                                 <span>分类</span>
                             </div>
                             <div class="stat">
-                                <strong>0</strong>
+                                <strong>3</strong>
                                 <span>标签</span>
                             </div>
                         </div>
@@ -570,20 +557,27 @@
                     <section class="info-card">
                         <h3>公告</h3>
                         <ul class="info-list">
-                            <li><strong>状态：</strong>主页风格已更新，文章内容暂未开放。</li>
-                            <li><strong>计划：</strong>后续可补充简历、项目、科研经历与学习笔记。</li>
+                            <li><strong>状态：</strong>博客网站长期有效，欢迎大家交流学习！</li>
+                            <li><strong>计划：</strong>本博客将长期分享个人科研项目，学习笔记，心得体会等内容。</li>
                         </ul>
                     </section>
                 </aside>
             </section>
 
             <!-- POSTS_START -->
-            <section class="empty-posts" aria-label="文章列表">
-                <div>
-                    <h2>暂未发布文章</h2>
-                    <p>等你准备好内容后，在仓库的 posts 目录新增 Markdown 文件并推送，首页会自动展示最新文章。</p>
+            <section class="posts-panel" aria-label="文章列表">
+                <div class="posts-head">
+                    <h2>最新文章</h2>
+                    <span>共 1 篇</span>
                 </div>
-                <div class="empty-icon" aria-hidden="true">+</div>
+                <a class="post-card" href="post/baoyan-english-speaking-interview.html">
+                    <div class="post-meta">
+                        <span>2026-07-03</span>
+                        <span class="tag-pill">保研</span><span class="tag-pill">英语口语</span><span class="tag-pill">面试</span>
+                    </div>
+                    <h3>保研面试——如何准备英语口语</h3>
+                    <p>整理保研英语口语面试的常见形式、自我介绍模板、高频问答、英文文献阅读、压力面和考前清单，并提供 PDF 原文下载。</p>
+                </a>
             </section>
             <!-- POSTS_END -->
         </main>

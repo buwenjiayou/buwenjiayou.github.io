@@ -8,6 +8,12 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>scripts/build_posts.py</generator>
     <atom:link href="https://blog.buwen.homes/rss.xml" rel="self" type="application/rss+xml" />
-
+    <item>
+      <title>保研面试——如何准备英语口语</title>
+      <link>https://blog.buwen.homes/post/baoyan-english-speaking-interview.html</link>
+      <guid isPermaLink="true">https://blog.buwen.homes/post/baoyan-english-speaking-interview.html</guid>
+      <description>整理保研英语口语面试的常见形式、自我介绍模板、高频问答、英文文献阅读、压力面和考前清单，并提供 PDF 原文下载。</description>
+      <pubDate>Fri, 03 Jul 2026 00:00:00 +0000</pubDate>
+    </item>
   </channel>
 </rss>

@@ -141,6 +141,7 @@ def read_posts() -> list[dict[str, object]]:
         title = meta.get("title") or path.stem
         date = meta.get("date") or dt.date.today().isoformat()
         description = meta.get("description") or ""
+        pdf = meta.get("pdf") or ""
         tags = parse_tags(meta.get("tags", ""))
         slug = slugify(meta.get("slug") or path.stem, f"post-{len(posts) + 1}")
         posts.append(
@@ -152,6 +153,7 @@ def read_posts() -> list[dict[str, object]]:
                 "tags": tags,
                 "slug": slug,
                 "url": f"post/{slug}.html",
+                "pdf": pdf,
                 "html": markdown_to_html(body),
             }
         )
@@ -232,7 +234,6 @@ def page_shell(title: str, body: str, description: str = SITE_DESCRIPTION) -> st
             padding: 12px 16px 12px 18px;
         }}
         .brand {{ display: flex; align-items: center; gap: 12px; color: var(--text); text-decoration: none; font-weight: 800; }}
-        .brand-mark {{ display: grid; width: 38px; height: 38px; place-items: center; border-radius: 8px; color: #fff; background: linear-gradient(135deg, #5271ff, #48c6ef); }}
         .nav {{ display: flex; align-items: center; justify-content: flex-end; gap: 6px; flex-wrap: wrap; }}
         .nav a, .theme-toggle {{
             display: inline-flex;
@@ -253,14 +254,45 @@ def page_shell(title: str, body: str, description: str = SITE_DESCRIPTION) -> st
         .article h1 {{ margin: 0; font-size: clamp(34px, 6vw, 62px); line-height: 1.08; }}
         .meta {{ display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 34px; color: var(--muted); font-size: 14px; }}
         .tag {{ display: inline-flex; min-height: 24px; align-items: center; padding: 0 8px; border: 1px solid var(--border); border-radius: 999px; background: var(--softer); }}
+        .article-actions {{ display: flex; flex-wrap: wrap; gap: 8px; margin: -14px 0 28px; }}
+        .download-button, .like-button {{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 32px;
+            padding: 0 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            background: var(--softer);
+            font: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+        }}
+        .download-button {{ color: #fff; border-color: transparent; background: linear-gradient(135deg, #5271ff, #48c6ef); }}
+        .like-button.is-liked {{ color: #fff; border-color: transparent; background: linear-gradient(135deg, #ff6b8b, #ff9a62); }}
         .content {{ font-size: 17px; }}
         .content h2 {{ margin-top: 34px; }}
         .content h3 {{ margin-top: 28px; }}
         .content p {{ margin: 16px 0 0; }}
         .content img {{ max-width: 100%; border-radius: 8px; }}
-        .content pre {{ overflow: auto; padding: 16px; border-radius: 8px; background: rgba(15, 23, 42, 0.88); color: #f8fafc; }}
+        .content pre {{ overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; padding: 16px; border-radius: 8px; background: rgba(15, 23, 42, 0.88); color: #f8fafc; }}
         .content code {{ font-family: "SFMono-Regular", Consolas, monospace; }}
-        .content blockquote {{ margin: 18px 0; padding-left: 16px; border-left: 3px solid #5271ff; color: var(--muted); }}
+        .content blockquote {{
+            margin: 14px 0;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-left: 4px solid #5271ff;
+            border-radius: 8px;
+            background: var(--softer);
+            color: var(--text);
+            font-size: 16px;
+            line-height: 1.75;
+            overflow-wrap: anywhere;
+            white-space: normal;
+        }}
         footer {{ margin-top: 24px; color: rgba(255,255,255,.88); text-shadow: 0 1px 12px rgba(0,0,0,.24); font-size: 14px; }}
         @media (max-width: 640px) {{
             .site-shell {{ width: calc(100% - 18px); padding-top: 14px; }}
@@ -273,7 +305,6 @@ def page_shell(title: str, body: str, description: str = SITE_DESCRIPTION) -> st
     <div class="site-shell">
         <header class="topbar">
             <a class="brand" href="../">
-                <span class="brand-mark">B</span>
                 <span>{SITE_TITLE}</span>
             </a>
             <nav class="nav">
@@ -297,8 +328,32 @@ def page_shell(title: str, body: str, description: str = SITE_DESCRIPTION) -> st
             localStorage.setItem("site-theme", nextTheme);
             syncThemeIcon();
         }}
+        function setupLikeButton() {{
+            const button = document.querySelector("[data-like-slug]");
+            if (!button) return;
+            const slug = button.dataset.likeSlug;
+            const key = `blog-like-${{slug}}`;
+            const countKey = `blog-like-count-${{slug}}`;
+            const baseCount = Number(localStorage.getItem(countKey) || "0");
+            const liked = localStorage.getItem(key) === "1";
+            function render(count, active) {{
+                button.classList.toggle("is-liked", active);
+                button.textContent = `${{active ? "已点赞" : "点赞"}} · ${{count}}`;
+            }}
+            render(baseCount, liked);
+            button.addEventListener("click", () => {{
+                const currentLiked = localStorage.getItem(key) === "1";
+                const currentCount = Number(localStorage.getItem(countKey) || "0");
+                const nextLiked = !currentLiked;
+                const nextCount = Math.max(0, currentCount + (nextLiked ? 1 : -1));
+                localStorage.setItem(key, nextLiked ? "1" : "0");
+                localStorage.setItem(countKey, String(nextCount));
+                render(nextCount, nextLiked);
+            }});
+        }}
         document.getElementById("copyrightYear").textContent = new Date().getFullYear();
         syncThemeIcon();
+        setupLikeButton();
     </script>
 </body>
 </html>
@@ -307,11 +362,21 @@ def page_shell(title: str, body: str, description: str = SITE_DESCRIPTION) -> st
 
 def render_post(post: dict[str, object]) -> str:
     tags = "".join(f'<span class="tag">{html.escape(str(tag))}</span>' for tag in post["tags"])
+    actions = [f'<button class="like-button" type="button" data-like-slug="{html.escape(str(post["slug"]))}">点赞 · 0</button>']
+    if post.get("pdf"):
+        actions.insert(
+            0,
+            f'<a class="download-button" href="{html.escape(str(post["pdf"]))}" download>下载 PDF 原文</a>',
+        )
+    action_html = "\n                ".join(actions)
     body = f"""<article class="article">
             <h1>{html.escape(str(post["title"]))}</h1>
             <div class="meta">
                 <span>{html.escape(str(post["date"]))}</span>
                 {tags}
+            </div>
+            <div class="article-actions">
+                {action_html}
             </div>
             <div class="content">
 {post["html"]}
@@ -413,7 +478,6 @@ def render_tag_page(posts: list[dict[str, object]]) -> str:
         .topbar,.panel {{ border:1px solid var(--border); border-radius:8px; background:var(--soft); box-shadow:var(--shadow); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); }}
         .topbar {{ display:flex; align-items:center; justify-content:space-between; gap:18px; min-height:64px; padding:12px 16px 12px 18px; }}
         .brand {{ display:flex; align-items:center; gap:12px; min-width:0; font-weight:800; }}
-        .brand-mark {{ display:grid; width:38px; height:38px; place-items:center; border-radius:8px; color:#fff; background:linear-gradient(135deg,#5271ff,#48c6ef); font-weight:900; }}
         .nav {{ display:flex; align-items:center; justify-content:flex-end; gap:6px; flex-wrap:wrap; }}
         .nav a,.theme-toggle {{ display:inline-flex; align-items:center; justify-content:center; min-height:38px; padding:0 12px; border:1px solid transparent; border-radius:8px; color:var(--muted); background:transparent; font:inherit; cursor:pointer; }}
         .nav a:hover,.theme-toggle:hover {{ color:var(--text); border-color:var(--border); background:var(--softer); }}
@@ -433,7 +497,7 @@ def render_tag_page(posts: list[dict[str, object]]) -> str:
 <body>
     <div class="site-shell">
         <header class="topbar">
-            <a class="brand" href="./"><span class="brand-mark">B</span><span>{SITE_TITLE}</span></a>
+            <a class="brand" href="./"><span>{SITE_TITLE}</span></a>
             <nav class="nav"><a href="./">主页</a><a href="rss.xml">RSS</a><a href="https://github.com/buwenjiayou" target="_blank" rel="noreferrer">GitHub</a><button class="theme-toggle" type="button" aria-label="切换明暗主题" onclick="toggleTheme()">☀</button></nav>
         </header>
         <main class="panel">
