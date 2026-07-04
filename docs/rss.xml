@@ -9,6 +9,13 @@
     <generator>scripts/build_posts.py</generator>
     <atom:link href="https://blog.buwen.homes/rss.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>早睡早起：把人生从恶性循环里救出来</title>
+      <link>https://blog.buwen.homes/post/sleep-early-wake-early-self-discipline.html</link>
+      <guid isPermaLink="true">https://blog.buwen.homes/post/sleep-early-wake-early-self-discipline.html</guid>
+      <description>记录一次关于早睡早起、睡眠拖延和保研夏令营状态管理的复盘：真正要战胜的不是一晚游戏，而是被晚睡撬开的整套恶性循环。</description>
+      <pubDate>Sat, 04 Jul 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
       <title>保研面试——如何准备英语口语</title>
       <link>https://blog.buwen.homes/post/baoyan-english-speaking-interview.html</link>
       <guid isPermaLink="true">https://blog.buwen.homes/post/baoyan-english-speaking-interview.html</guid>
