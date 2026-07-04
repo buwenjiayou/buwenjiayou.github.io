@@ -730,12 +730,6 @@ def render_rss_page() -> str:
             font-weight: 800;
         }}
         .reader-list a:hover {{ color: var(--accent); border-color: rgba(82, 113, 255, 0.45); }}
-        .note {{
-            max-width: 720px;
-            margin: 28px 0 0;
-            color: var(--muted);
-            font-size: 15px;
-        }}
         footer {{ margin-top: 24px; color: rgba(255,255,255,.88); text-shadow: 0 1px 12px rgba(0,0,0,.24); font-size: 14px; }}
         @media (max-width: 760px) {{
             .feed-box {{ grid-template-columns: 1fr; }}
@@ -768,7 +762,6 @@ def render_rss_page() -> str:
                 <li><a href="https://feedly.com/" target="_blank" rel="noreferrer">Feedly</a></li>
                 <li><a href="https://hyliu.me/fluent-reader/" target="_blank" rel="noreferrer">Fluent Reader</a></li>
             </ul>
-            <p class="note">RSS 源文件仍保留在 <code>rss.xml</code>，用于标准订阅；这个页面只是给直接点击 RSS 的访客一个更清楚的入口。</p>
         </main>
         <footer>Copyright © <span id="copyrightYear"></span> {SITE_TITLE}</footer>
     </div>
