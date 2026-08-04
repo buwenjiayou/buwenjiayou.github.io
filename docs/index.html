@@ -291,6 +291,57 @@
             color: var(--muted);
         }
 
+        .profile-contact {
+            display: grid;
+            grid-template-columns: 36px minmax(0, 1fr);
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            color: var(--text);
+            text-align: left;
+            text-decoration: none;
+        }
+
+        .contact-mark {
+            display: grid;
+            width: 36px;
+            height: 36px;
+            place-items: center;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--softer);
+            font-size: 17px;
+            font-weight: 800;
+            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+        }
+
+        .contact-text {
+            min-width: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            color: var(--muted);
+            overflow-wrap: anywhere;
+            transition: color 0.2s ease;
+        }
+
+        .contact-text strong {
+            color: var(--text);
+        }
+
+        .profile-contact:hover .contact-mark,
+        .profile-contact:focus-visible .contact-mark {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--card);
+        }
+
+        .profile-contact:hover .contact-text,
+        .profile-contact:focus-visible .contact-text {
+            color: var(--accent);
+        }
+
         .stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -565,6 +616,10 @@
                         <img class="avatar" src="assets/avatar.jpg" alt="布文头像">
                         <h2>布文</h2>
                         <p>天快亮了，我的bug还剩最后一个</p>
+                        <a class="profile-contact" href="mailto:tangpan1@mails.neu.edu.cn" aria-label="通过邮箱联系合作">
+                            <span class="contact-mark" aria-hidden="true">&#9993;</span>
+                            <span class="contact-text"><strong>合作请联系：</strong>tangpan1@mails.neu.edu.cn</span>
+                        </a>
                         <div class="stats" aria-label="博客统计">
                             <div class="stat">
                                 <strong>2</strong>
