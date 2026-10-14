@@ -9,6 +9,13 @@
     <generator>scripts/build_posts.py</generator>
     <atom:link href="https://blog.buwen.homes/rss.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>重新装回 Antigravity：折腾一天后，我看清了 AI 的付费边界</title>
+      <link>https://blog.buwen.homes/post/google-antigravity-paid-ai-era.html</link>
+      <guid isPermaLink="true">https://blog.buwen.homes/post/google-antigravity-paid-ai-era.html</guid>
+      <description>记录重新安装 Antigravity 后的登录、地区审核与模型权限问题，也借此思考 AI 产品正在怎样把免费体验、订阅权益和生产力成本重新分层。</description>
+      <pubDate>Wed, 14 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
       <title>早睡早起：把人生从恶性循环里救出来</title>
       <link>https://blog.buwen.homes/post/sleep-early-wake-early-self-discipline.html</link>
       <guid isPermaLink="true">https://blog.buwen.homes/post/sleep-early-wake-early-self-discipline.html</guid>
